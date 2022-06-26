@@ -9,6 +9,7 @@ let playerSelection
 function gameStart(){
     for(let i = 1; i <=5; i++){
         roundPlay()
+        console.log(".................................")
     }
     logWinner()
     
