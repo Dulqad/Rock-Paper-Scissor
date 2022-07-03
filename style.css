@@ -1,0 +1,27 @@
+body{
+    background-color: rgb(68, 116, 116);
+}
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button{
+    background: none;
+    outline: none;
+    border: none;
+    font-size: 50px;
+    margin: 20px;
+}
+.outCome{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(78, 78, 240);
+    font-size: 20px;
+}
+h1{
+    text-align: center;
+    background-color: blue;
+}

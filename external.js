@@ -1,78 +1,58 @@
-const choices = ['rock', 'paper', 'scissor']
-const winners = []
+let playerScore = 0;
+let computerScore = 0;
 
-let computerSelection
-let playerSelection
+const buttons = document.querySelectorAll('button')
+const resultDisplay= document.querySelector('#result')
 
+buttons.forEach(button =>{
+    button.addEventListener('click', function(e){
+        playRound(e.target.id)
+    })
+})
 
-
-function gameStart(){
-    for(let i = 1; i <=5; i++){
-        roundPlay()
-        console.log(".................................")
-    }
-    logWinner()
-    
+function computerPlay(){
+   let  choices = ['Rock', 'Paper', 'Scissor']
+    return choices[Math.floor(Math.random()* choices.length)] 
 }
 
+function playRound(playerSelection){
+    let computerSelection = computerPlay()
+    console.log(computerSelection)
+    console.log(playerSelection)
+    let result = ''
 
-function roundPlay(){
-    computerChoice()
-    playerChoice()
-    let winner = checkWinner(playerSelection, computerSelection)
-    console.log(winner)
-    winners.push(winner)
+    if(playerSelection === 'Rock' && computerSelection === 'Scissor'||
+        playerSelection=== 'Scissor'&& computerSelection === 'Paper' ||
+        playerSelection === 'Paper' && computerSelection === 'Rock'){
+            playerScore+= 1
+            result = playerSelection + ' ' +'beats' + ' '+ computerSelection+ ' '+ 'you won'
+            +'<br><br> playerScore: '+' '+ playerScore + '<br><br>computerScor: '+' '+computerScore
+        if(playerScore === 5){
+            result = 'you won the game 👏 refresh please to play again'
+            disabledButtons()
+        }
+
+    }
+    else if(playerSelection === computerSelection){
+        result = 'its a tie you both selected '+' '+ playerSelection
+        +'<br><br> playerScore: '+' '+ playerScore + '<br><br>computerScor: '+' '+computerScore
+    }
+    else{
+        computerScore+=1
+        result = computerSelection + ' ' +'beats' + ' '+ playerSelection+ ' '+ 'the computer won'
+        +'<br><br> playerScore: '+' '+ playerScore + '<br><br>computerScor: '+' '+computerScore;;
+        if(computerScore === 5){
+            result = 'the computer won the game refresh please to play again'
+            disabledButtons()
+        }
+    }
+    resultDisplay.innerHTML = result
+
 
 }
-function playerChoice(){
-    playerSelection = prompt("type Rock, Paper, Scissor")
-    while(playerSelection == null || playerSelection === ""){
-        playerSelection = prompt("type Rock, Paper, Scissor")
-    }
-    if(choices.includes(playerSelection)){
-        console.log(playerSelection)
-    }
-    
+
+function disabledButtons(){
+    buttons.forEach(button => {
+        button.disabled = true
+    })
 }
-function computerChoice(){
-     computerSelection = choices[Math.floor(Math.random()*choices.length)]
-     console.log(computerSelection)
-}
-
-
-
-function checkWinner(choiceP, choiceC){
-    if(choiceP === choiceC){
-        return "it's a tie"
-    }
-    else if(choiceP === "paper" && choiceC ==="rock"){
-        return "player won the game"
-    }
-    else if(choiceP === "paper"&& choiceC ==="scissor"  ){
-        return "computer won the game"
-    }
-    else if(choiceP === "scissor"&& choiceC ==="rock"  ){
-        return "computer won the game"
-    }
-    else if(choiceP === "scissor"&& choiceC ==="paper"  ){
-        return "player won the game"
-    }
-    else if(choiceP === "rock"&& choiceC ==="paper"  ){
-        return "player won the game"
-    }
-    else if(choiceP === "rock"&& choiceC ==="scissor"  ){
-        return "player won the game"
-    }
-
-}
- function logWinner(){
-    let playerWon = winners.filter((item)=> item === "player won the game").length
-    console.log("player won:", playerWon, "times")
-    let computerWon = winners.filter((item)=> item == "computer won the game").length
-    console.log("computer won:", computerWon, "times")
-    let tie = winners.filter((item)=> item == "it's a tie").length
-    console.log("Number of times tied:", tie, "times")
- }
-gameStart()
-
-
